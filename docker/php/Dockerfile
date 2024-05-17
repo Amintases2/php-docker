@@ -1,4 +1,4 @@
-FROM php:8.3-fpm
+FROM php:8.3-fpm as base
 
 COPY php.ini /usr/local/etc/php/
 COPY docker.conf /usr/local/etc/php-fpm.d/docker.conf
@@ -47,7 +47,13 @@ ENV PATH $PATH:/composer/vendor/bin
 RUN composer config --global process-timeout 3600
 RUN composer global require "laravel/installer"
 
+FROM base as scheduler
+RUN apt-get -y install cron
+ADD crontab /etc
+RUN crontab /etc/crontab
+CMD ["cron", "-f"]
+
+FROM base
 WORKDIR /root
 RUN git clone https://github.com/seebi/dircolors-solarized
-
 WORKDIR /var/www

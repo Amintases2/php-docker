@@ -4,3 +4,4 @@
 
 /docker/db/data
 /docker/logs
+/docker/elastic/nodes

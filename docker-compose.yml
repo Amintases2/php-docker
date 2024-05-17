@@ -8,10 +8,22 @@ services:
     build:
       context: docker/php
       dockerfile: Dockerfile
+      target: base
     volumes:
       - ./src:/var/www
     extra_hosts:
       - host.docker.internal:host-gateway
+
+  ##############################################
+  # CRON
+  ##############################################
+  scheduler:
+    build:
+      context: docker/php
+      dockerfile: Dockerfile
+      target: scheduler
+    volumes:
+      - ./src:/var/www
 
   ##############################################
   # NGINX
@@ -19,7 +31,7 @@ services:
   nginx:
     image: nginx:latest
     ports:
-      - 80:80
+      - "80:80"
     volumes:
       - ./src:/var/www
       - ./docker/logs:/var/log/nginx
@@ -35,6 +47,7 @@ services:
     image: mysql:8
     volumes:
     - ./docker/db/data:/var/lib/mysql
+    - ./docker/db/my_db.sql:/my_db.sql
     - ./docker/logs:/var/log/mysql
     - ./docker/db/my.cnf:/etc/mysql/conf.d/my.cnf
     - ./docker/db/sql:/docker-entrypoint-initdb.d
@@ -50,7 +63,7 @@ services:
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     ports:
-        - 8080:80
+        - "8080:80"
     links:
         - db
     environment:
@@ -64,27 +77,30 @@ services:
   # Elasticsearch
   ##############################################
   elasticsearch:
-    image: elasticsearch:5.3.0
+    image: elasticsearch:8.12.0
     depends_on:
       - php
     environment:
-      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
-      - "xpack.security.enabled=false"
       - "discovery.type=single-node"
+      - "node.name=cluster1-node1"
+      - "xpack.license.self_generated.type=basic"
+      - "xpack.security.enabled=false"
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
     ports:
       - "9200:9200"
     volumes:
-      - ./docker/elastic:/usr/share/elasticsearch/data
+#      - ./docker/elastic:/usr/share/elasticsearch/data
+      - ./docker/logs:/usr/share/elasticsearch/logs
 
   ##############################################
   # Kibana
   ##############################################
   kibana:
-    image: kibana:5.3.0
+    image: kibana:8.12.0
     restart: always
     environment:
-      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200    # address of elasticsearch docker container which kibana will connect
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
     ports:
-      - 5601:5601
+      - "5601:5601"
     depends_on:
       - elasticsearch
