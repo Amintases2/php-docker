@@ -3,5 +3,7 @@
 *.DS_Store
 
 /docker/db/data
+/docker/phpmyadmin/sessions
+/docker/logstash/lastrun
 /docker/logs
 /docker/elastic/nodes
