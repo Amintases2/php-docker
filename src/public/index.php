@@ -11,8 +11,6 @@ $params = [
     'index' => 'my_idx',
 ];
 
-$response = $client->search($params)->asArray();
+$response = $client->search($params)->asObject();
 
-dd($response);
-
-
+dd($response->hits->hits);

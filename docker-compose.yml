@@ -9,6 +9,7 @@ services:
       context: docker/php
       dockerfile: Dockerfile
       target: base
+    restart: always
     volumes:
       - ./src:/var/www
     extra_hosts:
@@ -22,6 +23,7 @@ services:
       context: docker/php
       dockerfile: Dockerfile
       target: scheduler
+    restart: always
     volumes:
       - ./src:/var/www
 
@@ -30,6 +32,7 @@ services:
   ##############################################
   nginx:
     image: nginx:latest
+    restart: always
     ports:
       - "80:80"
     volumes:
@@ -45,23 +48,28 @@ services:
   ##############################################
   db:
     image: mysql:8
+    restart: always
     volumes:
     - ./docker/db/data:/var/lib/mysql
     - ./docker/db/my_db.sql:/my_db.sql
     - ./docker/logs:/var/log/mysql
     - ./docker/db/my.cnf:/etc/mysql/conf.d/my.cnf
-    - ./docker/db/sql:/docker-entrypoint-initdb.d
+    - ./docker/db/scripts:/docker-entrypoint-initdb.d
+    # - ./docker/db/sql:/docker-entrypoint-initdb.d
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
       MYSQL_DATABASE: ${DB_DATABASE}
       MYSQL_USER: ${DB_USER}
       MYSQL_PASSWORD: ${DB_PASSWORD}
+    # command: docker-entrypoint-initdb.d/entrypoint.sh
+    # command: --init-file /docker-entrypoint-initdb.d/setup.sql
 
   ##############################################
   # PMA
   ##############################################
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
+    restart: always
     ports:
         - "8080:80"
     links:
@@ -80,16 +88,15 @@ services:
     image: elasticsearch:${ELASTIC_VERSION}
     depends_on:
       - php
+    ports:
+      - "9200:9200"
     environment:
       - "discovery.type=single-node"
       - "node.name=cluster1-node1"
       - "xpack.license.self_generated.type=basic"
       - "xpack.security.enabled=false"
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
-    ports:
-      - "9200:9200"
     volumes:
-#      - ./docker/elastic:/usr/share/elasticsearch/data
       - ./docker/logs:/usr/share/elasticsearch/logs
 
   ##############################################
@@ -98,10 +105,10 @@ services:
   kibana:
     image: kibana:${ELASTIC_VERSION}
     restart: always
-    environment:
-      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
     ports:
       - "5601:5601"
+    environment:
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
     depends_on:
       - elasticsearch
 
@@ -109,7 +116,12 @@ services:
   # Logstash
   ##############################################
   logstash:
-    build: ./docker/logstash
+    build: 
+      context: ./docker/logstash
+      args:
+        ELASTIC_VERSION: ${ELASTIC_VERSION}
+        DB_DATABASE: ${DB_DATABASE}
+    restart: always
     volumes:
       - './docker/logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml'
       - './docker/logstash/pipeline:/usr/share/logstash/pipeline'
@@ -120,4 +132,4 @@ services:
       LS_JAVA_OPTS: -Xms256m -Xmx256m
     depends_on:
       - elasticsearch
-    restart: always
+      - db
