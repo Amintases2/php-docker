@@ -1,5 +1,3 @@
-#!/bin/bash
-
 export MYSQL_PWD=$MYSQL_ROOT_PASSWORD; mysql --user=root --execute \
 "
 CREATE DATABASE IF NOT EXISTS $MYSQL_DATABASE;
