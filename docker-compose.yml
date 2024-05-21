@@ -47,8 +47,7 @@ services:
   # MYSQL
   ##############################################
   db:
-    build:
-      context: docker/db
+    image: mysql:8
     restart: always
     volumes:
     - ./docker/db/data:/var/lib/mysql
@@ -62,8 +61,6 @@ services:
       MYSQL_DATABASE: ${DB_DATABASE}
       MYSQL_USER: ${DB_USER}
       MYSQL_PASSWORD: ${DB_PASSWORD}
-    # command: docker-entrypoint-initdb.d/entrypoint.sh
-    # command: --init-file /docker-entrypoint-initdb.d/setup.sql
 
   ##############################################
   # PMA
