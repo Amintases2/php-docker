@@ -15,7 +15,7 @@ To deploy this project run
   create .env from .env.example
   docker-compose up -d --build
   docker compose exec php composer install
-  docker compose exec db docker-entrypoint-initdb.d/entrypoint.sh
+  docker compose exec db scripts/entrypoint.sh
 ```
 
 ## PMA
