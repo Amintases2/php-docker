@@ -118,7 +118,6 @@ services:
       context: ./docker/logstash
       args:
         ELASTIC_VERSION: ${ELASTIC_VERSION}
-        DB_DATABASE: ${DB_DATABASE}
     restart: always
     volumes:
       - './docker/logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml'
@@ -128,6 +127,7 @@ services:
       - '5001:5001'
     environment:
       LS_JAVA_OPTS: -Xms256m -Xmx256m
+      DB_DATABASE: ${DB_DATABASE}
     depends_on:
       - elasticsearch
       - db
