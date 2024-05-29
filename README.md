@@ -15,6 +15,13 @@ To deploy this project run
   docker compose exec php composer install
 ```
 
+## Tests
+To test this project with PHPUnit run
+
+```
+  docker-compose exec php composer test
+```
+
 ## PMA
 - localhost:8080
 - root:root
