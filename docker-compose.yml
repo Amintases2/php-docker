@@ -54,13 +54,13 @@ services:
     - ./docker/db/my_db.sql:/my_db.sql
     - ./docker/logs:/var/log/mysql
     - ./docker/db/my.cnf:/etc/mysql/conf.d/my.cnf
-    - ./docker/db/scripts:/docker-entrypoint-initdb.d
+    - ./docker/db/scripts:/scripts
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
       MYSQL_DATABASE: ${DB_DATABASE}
       MYSQL_USER: ${DB_USER}
       MYSQL_PASSWORD: ${DB_PASSWORD}
-    working_dir: /docker-entrypoint-initdb.d
+    working_dir: /scripts
 
   ##############################################
   # PMA
