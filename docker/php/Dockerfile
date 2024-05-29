@@ -53,7 +53,7 @@ ADD crontab /etc
 RUN crontab /etc/crontab
 CMD ["cron", "-f"]
 
-FROM base
+FROM base as base
 WORKDIR /root
 RUN git clone https://github.com/seebi/dircolors-solarized
 WORKDIR /var/www

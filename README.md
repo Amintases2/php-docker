@@ -12,10 +12,9 @@ Simple php framework
 To deploy this project run
 
 ```
-  create .env from .env.example
+  cp .env.example .env
   docker-compose up -d --build
   docker compose exec php composer install
-  docker compose exec db sed -i -e 's/\r$//' entrypoint.sh
   docker compose exec db bash entrypoint.sh
 ```
 
