@@ -52,7 +52,7 @@ services:
     volumes:
     - ./docker/db/data:/var/lib/mysql
     - ./docker/db/my_db.sql:/my_db.sql
-    - ./docker/logs:/var/log/mysql
+    - ./docker/logs/mysql:/var/log/mysql
     - ./docker/db/my.cnf:/etc/mysql/conf.d/my.cnf
     - ./docker/db/scripts:/scripts
     environment:
@@ -95,7 +95,7 @@ services:
       - "xpack.security.enabled=false"
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
     volumes:
-      - ./docker/logs:/usr/share/elasticsearch/logs
+      - ./docker/logs/elasticsearch:/usr/share/elasticsearch/logs
 
   ##############################################
   # Kibana
