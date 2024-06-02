@@ -10,4 +10,9 @@ COPY mysql-connector-j-8.4.0 /opt/
 # Add your logstash plugins setup here
 # RUN logstash-plugin install logstash-input-jdbc
 # Example: RUN logstash-plugin install logstash-filter-json
-# RUN logstash-plugin install logstash-filter-aggregate
+
+# RUN logstash-plugin install logstash-input-syslog
+# RUN logstash-plugin install logstash-filter-date
+# RUN logstash-plugin install logstash-filter-grok
+# RUN logstash-plugin install logstash-filter-useragent
+# RUN logstash-plugin install logstash-output-elasticsearch
