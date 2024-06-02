@@ -4,20 +4,25 @@ COPY php.ini /usr/local/etc/php/
 COPY docker.conf /usr/local/etc/php-fpm.d/docker.conf
 COPY .bashrc /root/
 
+
+RUN apt-get update && apt-get install -y \
+    libzip-dev curl git unzip vim \
+    && docker-php-ext-install zip pdo_mysql
+
 # mix
-RUN apt-get update \
-  && apt-get install -y build-essential zlib1g-dev default-mysql-client curl gnupg procps vim git unzip libzip-dev libpq-dev \
-  && docker-php-ext-install zip pdo_mysql
+# RUN apt-get update \
+#   && apt-get install -y build-essential zlib1g-dev default-mysql-client curl  procps vim git unzip libzip-dev libpq-dev \
+#   && docker-php-ext-install zip pdo_mysql
 
 # intl
-RUN apt-get install -y libicu-dev \
-  && docker-php-ext-configure intl \
-  && docker-php-ext-install intl
+# RUN apt-get install -y libicu-dev \
+#   && docker-php-ext-configure intl \
+#   && docker-php-ext-install intl
 
 # gd
-RUN apt-get install -y libfreetype6-dev libjpeg62-turbo-dev libpng-dev && \
-docker-php-ext-configure gd --with-freetype=/usr/include/ --with-jpeg=/usr/include/ && \
-docker-php-ext-install gd
+# RUN apt-get install -y libfreetype6-dev libjpeg62-turbo-dev libpng-dev && \
+# docker-php-ext-configure gd --with-freetype=/usr/include/ --with-jpeg=/usr/include/ && \
+# docker-php-ext-install gd
 
 # redis
 # RUN pecl install redis && docker-php-ext-enable redis
@@ -45,7 +50,7 @@ ENV COMPOSER_ALLOW_SUPERUSER 1
 ENV COMPOSER_HOME /composer
 ENV PATH $PATH:/composer/vendor/bin
 RUN composer config --global process-timeout 3600
-RUN composer global require "laravel/installer"
+# RUN composer global require "laravel/installer"
 
 FROM base as scheduler
 RUN apt-get -y install cron
@@ -53,7 +58,6 @@ ADD crontab /etc
 RUN crontab /etc/crontab
 CMD ["cron", "-f"]
 
-FROM base as base
 WORKDIR /root
 RUN git clone https://github.com/seebi/dircolors-solarized
 WORKDIR /var/www
