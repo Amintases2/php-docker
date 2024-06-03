@@ -6,7 +6,7 @@ COPY .bashrc /root/
 
 
 RUN apt-get update && apt-get install -y \
-    libzip-dev curl git unzip vim \
+    libzip-dev curl git unzip vim procps \
     && docker-php-ext-install zip pdo_mysql
 
 # mix

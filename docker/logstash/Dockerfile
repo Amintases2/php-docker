@@ -6,7 +6,7 @@ USER root
 
 RUN apt-get update
 
-COPY mysql-connector-j-8.4.0 /opt/
+COPY mysql-connector-j-8.2.0.jar /usr/share/logstash/logstash-core/lib/jars/mysql-connector-j-8.2.0.jar
 # Add your logstash plugins setup here
 # RUN logstash-plugin install logstash-input-jdbc
 # Example: RUN logstash-plugin install logstash-filter-json
@@ -16,3 +16,4 @@ COPY mysql-connector-j-8.4.0 /opt/
 # RUN logstash-plugin install logstash-filter-grok
 # RUN logstash-plugin install logstash-filter-useragent
 # RUN logstash-plugin install logstash-output-elasticsearch
+# /usr/share/logstash/logstash-core/lib/jars

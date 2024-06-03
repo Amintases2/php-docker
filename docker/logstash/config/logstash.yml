@@ -11,9 +11,9 @@
 ###     https://www.elastic.co/guide/en/x-pack/current/installing-xpack.html#xpack-enabling
 ##
 #xpack.monitoring.enabled: false
-pipeline.id: main
-
 http.host: 0.0.0.0
 
 node.name: logstash
+
+config.reload.automatic: true
 

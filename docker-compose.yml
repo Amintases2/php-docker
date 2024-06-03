@@ -120,8 +120,9 @@ services:
         ELASTIC_VERSION: ${ELASTIC_VERSION}
     restart: always
     volumes:
-      - './docker/logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml'
       - './docker/logstash/pipeline:/usr/share/logstash/pipeline'
+      - './docker/logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml'
+      - './docker/logstash/config/pipelines.yml:/usr/share/logstash/config/pipelines.yml'
       - './docker/logstash/lastrun:/root/.logstash_jdbc_last_run'
       - './docker/logs:/var/log'
     ports:
