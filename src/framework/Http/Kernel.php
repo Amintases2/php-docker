@@ -3,6 +3,7 @@
 namespace Framework\Http;
 
 use Exception;
+use Framework\Http\Exceptions\HttpException;
 use Framework\Routing\Router;
 
 class Kernel
@@ -14,8 +15,8 @@ class Kernel
 			[$routeHandler, $vars] = (new Router())->dispatch($request);
 
 			$response = call_user_func_array($routeHandler, $vars);
-		} catch (Exception $exception) {
-			$response = new Response($exception->getMessage(), 500);
+		} catch (HttpException $exception) {
+			$response = new Response($exception->getMessage(), $exception->getStatusCode());
 		}
 
 		return $response;
