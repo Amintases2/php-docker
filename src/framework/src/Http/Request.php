@@ -1,6 +1,6 @@
 <?php
 
-namespace Framework\Http;
+namespace PFW\Framework\Http;
 
 class Request
 {

@@ -1,12 +1,12 @@
 <?php
 
-namespace Framework\Routing;
+namespace PFW\Framework\Routing;
 
 use FastRoute\Dispatcher;
-use Framework\Http\Request;
 use FastRoute\RouteCollector;
-use Framework\Http\Exceptions\MethodNotAllowedException;
-use Framework\Http\Exceptions\NotFoundException;
+use PFW\Framework\Http\Request;
+use PFW\Framework\Http\Exceptions\MethodNotAllowedException;
+use PFW\Framework\Http\Exceptions\NotFoundException;
 
 use function FastRoute\simpleDispatcher;
 

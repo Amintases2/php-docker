@@ -1,8 +1,8 @@
 <?php
 
-namespace Framework\Routing;
+namespace PFW\Framework\Routing;
 
-use Framework\Http\Request;
+use PFW\Framework\Http\Request;
 
 interface RouterInterface
 {

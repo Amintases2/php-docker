@@ -1,6 +1,6 @@
 <?php
 
-namespace Framework\Routing;
+namespace PFW\Framework\Routing;
 
 class Route
 {

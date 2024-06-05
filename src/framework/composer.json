@@ -1,0 +1,22 @@
+{
+    "name": "pfw/framework",
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-4": {
+            "PFW\\Framework\\": "src"
+        }
+    },
+    "authors": [
+        {
+            "name": "marat"
+        }
+    ],
+    "require": {
+        "nikic/fast-route": "^1.3"
+    },
+    "config": {
+        "allow-plugins": {
+            "php-http/discovery": true
+        }
+    }
+}

@@ -1,6 +1,6 @@
 <?php
 
-namespace Framework\Http\Exceptions;
+namespace PFW\Framework\Http\Exceptions;
 
 use Exception;
 

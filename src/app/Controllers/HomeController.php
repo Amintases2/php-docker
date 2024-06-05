@@ -2,7 +2,7 @@
 
 namespace App\Controllers;
 
-use Framework\Http\Response;
+use PFW\Framework\Http\Response;
 
 class HomeController
 {

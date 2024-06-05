@@ -1,10 +1,10 @@
 <?php
 
-namespace Framework\Http;
+namespace PFW\Framework\Http;
 
 use Exception;
-use Framework\Http\Exceptions\HttpException;
-use Framework\Routing\Router;
+use PFW\Framework\Http\Exceptions\HttpException;
+use PFW\Framework\Routing\Router;
 
 class Kernel
 {

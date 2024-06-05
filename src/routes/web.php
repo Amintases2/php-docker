@@ -1,9 +1,9 @@
 <?php
 
-use Framework\Routing\Route;
 use App\Controllers\HomeController;
 use App\Controllers\PostController;
-use Framework\Http\Response;
+use PFW\Framework\Routing\Route;
+use PFW\Framework\Http\Response;
 
 return [
     Route::get('/', [HomeController::class, 'index']),
