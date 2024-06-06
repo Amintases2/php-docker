@@ -4,7 +4,7 @@ namespace PFW\Framework\Http\Exceptions;
 
 use Exception;
 
-class HttpException extends Exception
+class HttpException extends \Exception
 {
     protected int $statusCode = 500;
 

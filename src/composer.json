@@ -4,9 +4,6 @@
             "App\\": "app"
         }
     },
-    "scripts": {
-        "test": "phpunit tests"
-    },
     "require-dev": {
         "symfony/var-dumper": "^7.0",
         "phpunit/phpunit": "^11.1"
