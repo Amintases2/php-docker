@@ -9,7 +9,8 @@
         "phpunit/phpunit": "^11.1"
     },
     "require": {
-        "pfw/framework": "dev-main"
+        "pfw/framework": "dev-main",
+        "symfony/dotenv": "^7.1"
     },
     "repositories": [
         {

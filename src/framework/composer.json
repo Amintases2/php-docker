@@ -22,7 +22,8 @@
     ],
     "require": {
         "nikic/fast-route": "^1.3",
-        "league/container": "^4.2.0"
+        "league/container": "^4.2.0",
+        "symfony/dotenv": "7.2.x-dev"
     },
     "config": {
         "allow-plugins": {
