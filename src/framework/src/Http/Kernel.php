@@ -4,15 +4,19 @@ namespace PFW\Framework\Http;
 
 use Exception;
 use PFW\Framework\Http\Exceptions\HttpException;
-use PFW\Framework\Routing\Router;
+use PFW\Framework\Routing\RouterInterface;
 
 class Kernel
 {
+	public function __construct(
+		private RouterInterface $router
+	) {
+	}
 
 	public function handle(Request $request): Response
 	{
 		try {
-			[$routeHandler, $vars] = (new Router())->dispatch($request);
+			[$routeHandler, $vars] = $this->router->dispatch($request);
 
 			$response = call_user_func_array($routeHandler, $vars);
 		} catch (HttpException $exception) {

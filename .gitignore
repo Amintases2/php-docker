@@ -2,5 +2,7 @@
 .vscode
 *.DS_Store
 
+/docker/phpmyadmin
 /docker/db/data
 /docker/logs
+
