@@ -4,6 +4,7 @@ namespace PFW\Framework\Routing;
 
 use FastRoute\Dispatcher;
 use FastRoute\RouteCollector;
+use League\Container\Container;
 use PFW\Framework\Http\Request;
 use PFW\Framework\Http\Exceptions\MethodNotAllowedException;
 use PFW\Framework\Http\Exceptions\NotFoundException;
@@ -19,13 +20,14 @@ class Router implements RouterInterface
         $this->routes = $routes;
     }
 
-    public function dispatch(Request $request): array
+    public function dispatch(Request $request, Container $container): array
     {
         [$handler, $vars] = $this->extractRouteInfo($request);
 
         if (is_array($handler)) {
-            [$controller, $method] = $handler;
-            $handler = [new $controller, $method];
+            [$controllerId, $method] = $handler;
+            $controller = $container->get($controllerId);
+            $handler = [$controller, $method];
         }
 
         return [$handler, $vars];
