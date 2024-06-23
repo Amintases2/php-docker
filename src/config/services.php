@@ -4,6 +4,7 @@ use League\Container\Argument\Literal\ArrayArgument;
 use League\Container\Argument\Literal\StringArgument;
 use League\Container\Container;
 use League\Container\ReflectionContainer;
+use PFW\Framework\Controllers\AbstractController;
 use PFW\Framework\Http\Kernel;
 use PFW\Framework\Routing\Router;
 use PFW\Framework\Routing\RouterInterface;
@@ -33,11 +34,13 @@ $container->extend(RouterInterface::class)
 $views = BASE_PATH . '/views';
 $container->addShared('twig-loader', FilesystemLoader::class)
     ->addArgument(new StringArgument($views));
-$container->addShared(Environment::class)
+
+$container->addShared('twig', Environment::class)
     ->addArgument('twig-loader');
 
+$container->inflector(AbstractController::class)
+    ->invokeMethod('setContainer', [$container]);
 
-// Applications parametrs
 
 
 

@@ -2,14 +2,13 @@
 
 namespace App\Controllers;
 
+use PFW\Framework\Controllers\AbstractController;
 use PFW\Framework\Http\Response;
 
-class PostController
+class PostController extends AbstractController
 {
     public function show($id): Response
     {
-        $content = "<h1>Post #{$id}</h1>";
-
-        return new Response($content, 200, []);
+        return $this->render('post.html.twig', ['postId' => $id]);
     }
 }
