@@ -2,7 +2,8 @@
 .vscode
 *.DS_Store
 
-/docker/phpmyadmin
-/docker/db/data
-/docker/logs
+docker/phpmyadmin/*
+docker/db/data
+docker/logs/*
 
+!.gitkeep
