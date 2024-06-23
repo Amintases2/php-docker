@@ -15,7 +15,6 @@ class HomeController extends AbstractController
 
     public function index(): Response
     {
-        $content = "<h1>Привет {{ name }}</h1>";
         return $this->render('home.html.twig', ['name' => 'Marat']);
     }
 }

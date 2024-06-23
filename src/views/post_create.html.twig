@@ -1,0 +1,20 @@
+{% extends 'default.html.twig'%}{% block main %}
+<form action="/post/create" method="POST">
+  <div class="input-group mb-3">
+    <label for="">Название</label>
+    <input class="w-100 form-control" type="text" name="title" />
+  </div>
+  <div class="input-group mb-3">
+    <label for="">Описание</label>
+    <textarea
+      rows="10"
+      class="w-100 form-control"
+      name="description"
+      id=""
+    ></textarea>
+  </div>
+  <div class="input-group mb-3">
+    <input class="btn btn-success w-100 form-control" type="submit" />
+  </div>
+</form>
+{% endblock %}

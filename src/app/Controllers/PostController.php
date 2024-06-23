@@ -11,4 +11,9 @@ class PostController extends AbstractController
     {
         return $this->render('post.html.twig', ['postId' => $id]);
     }
+
+    public function create(): Response
+    {
+        return $this->render('post_create.html.twig');
+    }
 }
