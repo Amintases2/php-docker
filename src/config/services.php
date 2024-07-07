@@ -15,6 +15,7 @@ use PFW\Framework\Routing\RouterInterface;
 use Symfony\Component\Dotenv\Dotenv;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
+use \PFW\Framework\Artisan\Commands\MigrateCommand;
 
 $container = new Container();
 $container->delegate(new ReflectionContainer(true));
@@ -39,6 +40,9 @@ $container->add(ArtisanKernel::class)
     ->addArgument(Application::class);
 $container->add('framework-commands-namespace', new StringArgument('PFW\\Framework\\Artisan\\Commands\\'));
 $container->add(Application::class)->addArgument($container);
+$container->add('console:migrate', MigrateCommand::class)
+    ->addArgument(Connection::class)
+    ->addArgument(new StringArgument(BASE_PATH . '/database/migrations'));
 
 // ROUTES
 $routes = include BASE_PATH . '/routes/web.php';

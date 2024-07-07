@@ -13,9 +13,11 @@ class ConnectionFactory
 
     public function createConnection()
     {
-        return DriverManager::getConnection([
+        $connection =  DriverManager::getConnection([
             'driver' => 'pdo_mysql',
             'url' => $this->databaseUrl
         ]);
+        $connection->setAutoCommit(false);
+        return $connection;
     }
 }
