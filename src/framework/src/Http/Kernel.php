@@ -6,7 +6,7 @@ use Exception;
 use League\Container\Container;
 use PFW\Framework\Http\Exceptions\HttpException;
 use PFW\Framework\Routing\RouterInterface;
-
+use \Doctrine\DBAL\Connection;
 
 class Kernel
 {

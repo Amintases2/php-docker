@@ -1,0 +1,17 @@
+#!/usr/bin/env php
+
+<?php
+
+define('BASE_PATH', __DIR__);
+
+require_once BASE_PATH . '/vendor/autoload.php';
+
+use PFW\Framework\Artisan\Kernel;
+
+/** @var  \League\Container\Container $container */
+$container = require_once BASE_PATH . '/config/services.php';
+$kernel = $container->get(Kernel::class);
+
+$status = $kernel->handle();
+
+exit($status);
