@@ -7,8 +7,6 @@ use PFW\Framework\Db\ConnectionFactory;
 
 class MigrateCommand implements CommandInterface
 {
-    private string $name = 'migrate';
-
     public function __construct(
         private ConnectionFactory $connection,
         private string $migrationsPath
@@ -18,7 +16,7 @@ class MigrateCommand implements CommandInterface
     public function execute(array $options = []): int
     {
         try {
-            $this->connection->mysql->beginTransaction();;
+            $this->connection->mysql->beginTransaction();
 
             $this->createMigrationsTable();
 

@@ -1,10 +1,10 @@
 <?php
 
-use Doctrine\DBAL\Types\Types;
+use PFW\Framework\Db\ConnectionFactory;
 
 return new class
 {
-    public function up($connection): void
+    public function up(ConnectionFactory $connection): void
     {
         $sql = "create table if not exists posts (
             id int unsigned not null auto_increment primary key,
@@ -16,8 +16,9 @@ return new class
         $connection->mysql->query($sql)->execute();
     }
 
-    public function down(): void
+    public function down(ConnectionFactory $connection): void
     {
-        // do nothing
+        $sql = "drop table if exists posts";
+        $connection->mysql->query($sql)->execute();
     }
 };

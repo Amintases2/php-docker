@@ -15,6 +15,7 @@ use Symfony\Component\Dotenv\Dotenv;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 use \PFW\Framework\Artisan\Commands\MigrateCommand;
+use PFW\Framework\Artisan\Commands\RollBackCommand;
 
 $container = new Container();
 $container->delegate(new ReflectionContainer(true));
@@ -31,11 +32,14 @@ $container->add(ConnectionFactory::class)
 
 // ARTISAN
 $container->add(ArtisanKernel::class)
-    ->addArgument($container)
-    ->addArgument(Application::class);
+    ->addArgument($container);
 $container->add('framework-commands-namespace', new StringArgument('PFW\\Framework\\Artisan\\Commands\\'));
-$container->add(Application::class)->addArgument($container);
-$container->add('console:migrate', MigrateCommand::class)
+
+// ARTISAN COMMANDS
+$container->add('console:db:migrate', MigrateCommand::class)
+    ->addArgument(ConnectionFactory::class)
+    ->addArgument(new StringArgument(BASE_PATH . '/database/migrations'));
+$container->add('console:db:rollback', RollBackCommand::class)
     ->addArgument(ConnectionFactory::class)
     ->addArgument(new StringArgument(BASE_PATH . '/database/migrations'));
 

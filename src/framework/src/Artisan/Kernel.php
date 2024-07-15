@@ -9,36 +9,45 @@ class Kernel
 {
     public function __construct(
         private Container $container,
-        private Application $application
     ) {
     }
 
     public function handle(): int
     {
-        $this->registerCommands();
-
-        $status = $this->application->run();
+        $status = $this->run();
 
         dd($status);
-
-        return 0;
     }
 
-    private function registerCommands(): void
+
+    private function run(): int
     {
-        $commandFiles = new \DirectoryIterator(__DIR__ . '/Commands');
-        $namespace = $this->container->get('framework-commands-namespace');
-        foreach ($commandFiles as $commandFile) {
-            if (!$commandFile->isFile() || !$commandFile->getExtension() === 'php') {
-                continue;
-            }
+        $argv = $_SERVER['argv'];
+        $commandName = $argv[1] ?? null;
 
-            $command = $namespace . pathinfo($commandFile, PATHINFO_FILENAME);
+        if (!$commandName) {
+            throw new ConsoleException('Invalid console command!');
+        }
 
-            if (is_subclass_of($command, CommandInterface::class)) {
-                $name = (new \ReflectionClass($command))->getProperty('name')->getDefaultValue();
-                $this->container->add("console:$name", $command);
+        $args = array_slice($argv, 2);
+        $options = $this->parseOptions($args);
+
+        /** @var CommandInterface $command */
+        $command = $this->container->get("console:$commandName");
+        return $command->execute($options);
+    }
+
+    private function parseOptions(array $args): array
+    {
+        $options = [];
+        foreach ($args as $key => $arg) {
+            if (str_starts_with($arg, '--')) {
+                $option = explode("=", substr($arg, 2));
+                $options[] = $option;
+            } else {
+                $options[] = $arg;
             }
         }
+        return $options;
     }
 }

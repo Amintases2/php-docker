@@ -5,6 +5,7 @@ namespace PFW\Framework\Routing;
 use FastRoute\Dispatcher;
 use FastRoute\RouteCollector;
 use League\Container\Container;
+use PFW\Framework\Artisan\Commands\RollBackCommand;
 use PFW\Framework\Http\Request;
 use PFW\Framework\Http\Exceptions\MethodNotAllowedException;
 use PFW\Framework\Http\Exceptions\NotFoundException;
