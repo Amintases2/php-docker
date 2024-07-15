@@ -5,7 +5,7 @@ namespace PFW\Framework\Http;
 class Response
 {
 	public function __construct(
-		private string $content = '',
+		private string | array $content = '',
 		private int $statusCode = 200,
 		private array $headers = []
 	) {
@@ -14,7 +14,13 @@ class Response
 
 	public function send(): void
 	{
-		echo $this->content;
+		if (is_array($this->content)) {
+			header('Content-Type: application/json');
+			echo json_encode($this->content);
+		} else if (is_string($this->content)) {
+			header('Content-Type: text/html');
+			echo $this->content;
+		}
 	}
 
 	public function setContent(string $content): Response
