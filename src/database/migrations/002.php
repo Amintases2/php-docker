@@ -4,19 +4,16 @@ use Doctrine\DBAL\Types\Types;
 
 return new class
 {
-    public function up($scheme): void
+    public function up($connection): void
     {
-        $table = $scheme->createTable('posts');
-        $table->addColumn('id', Types::INTEGER, [
-            'unsigned' => true,
-            'autoincrement' => true
-        ]);
-        $table->addColumn('title', Types::STRING);
-        $table->addColumn('body', Types::TEXT);
-        $table->addColumn('created_at', Types::DATETIME_IMMUTABLE, [
-            'default' => 'CURRENT_TIMESTAMP'
-        ]);
-        $table->setPrimaryKey(['id']);
+        $sql = "create table if not exists posts (
+            id int unsigned not null auto_increment primary key,
+            title varchar(255) not null,
+            content text,
+            created_at timestamp default current_timestamp,
+            updated_at timestamp default current_timestamp on update current_timestamp
+        )";
+        $connection->mysql->query($sql)->execute();
     }
 
     public function down(): void

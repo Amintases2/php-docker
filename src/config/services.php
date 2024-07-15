@@ -1,6 +1,5 @@
 <?php
 
-use Doctrine\DBAL\Connection;
 use League\Container\Argument\Literal\ArrayArgument;
 use League\Container\Argument\Literal\StringArgument;
 use League\Container\Container;
@@ -27,12 +26,8 @@ $appEnv = $_ENV['APP_ENV'] ?? 'local';
 $container->add('APP_ENV', new StringArgument($appEnv));
 
 // DATABASE
-$databaseUrl = "pdo-mysql://root:root@db:3306/test?charset=utf8mb4";
 $container->add(ConnectionFactory::class)
-    ->addArgument($databaseUrl);
-$container->addShared(Connection::class, function () use ($container) {
-    return $container->get(ConnectionFactory::class)->createConnection();
-});
+    ->addMethodCall('createConnection');
 
 // ARTISAN
 $container->add(ArtisanKernel::class)
@@ -41,7 +36,7 @@ $container->add(ArtisanKernel::class)
 $container->add('framework-commands-namespace', new StringArgument('PFW\\Framework\\Artisan\\Commands\\'));
 $container->add(Application::class)->addArgument($container);
 $container->add('console:migrate', MigrateCommand::class)
-    ->addArgument(Connection::class)
+    ->addArgument(ConnectionFactory::class)
     ->addArgument(new StringArgument(BASE_PATH . '/database/migrations'));
 
 // ROUTES

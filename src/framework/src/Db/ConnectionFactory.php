@@ -2,22 +2,24 @@
 
 namespace PFW\Framework\Db;
 
-use Doctrine\DBAL\DriverManager;
+use PDO;
 
 class ConnectionFactory
 {
-    public function __construct(
-        private mixed $databaseUrl
-    ) {
+    public $mysql = null;
+
+    public function __construct()
+    {
     }
 
     public function createConnection()
     {
-        $connection =  DriverManager::getConnection([
-            'driver' => 'pdo_mysql',
-            'url' => $this->databaseUrl
-        ]);
-        $connection->setAutoCommit(false);
-        return $connection;
+        $connection = new PDO(
+            "mysql:host={$_ENV['DB_HOST']};dbname={$_ENV['DB_NAME']}",
+            'root',
+            $_ENV['DB_ROOT_PASSWORD']
+        );
+        $connection->setAttribute(PDO::ATTR_AUTOCOMMIT, 0);
+        $this->mysql = $connection;
     }
 }
