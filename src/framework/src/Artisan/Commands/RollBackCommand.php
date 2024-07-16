@@ -17,13 +17,14 @@ class RollBackCommand implements CommandInterface
     {
         try {
             $this->connection->mysql->beginTransaction();
-            $migrationName = $options[0];
 
-            if (!$migrationName) {
+            $migrationName = array_values(array_filter(
+                scandir($this->migrationsPath),
+                fn ($file) => str_starts_with($file, $options[0])
+            ))[0] ?? null;
+
+            if (!$migrationName || !str_ends_with($migrationName, '.php')) {
                 throw new \Exception('Invalid migration name');
-            }
-            if (!str_ends_with($migrationName, '.php')) {
-                $migrationName = "$migrationName.php";
             }
 
             $migrationInstanse = require $this->migrationsPath . "/$migrationName";
@@ -44,8 +45,14 @@ class RollBackCommand implements CommandInterface
 
     private function removeMigration($migrationName): void
     {
-        $this->connection->mysql
-            ->query("DELETE FROM migrations WHERE migration = '$migrationName'")
-            ->execute();
+        $doesExist = $this->connection->mysql
+            ->query("SHOW TABLES FROM `{$_ENV['DB_NAME']}` like 'migrations';")
+            ->fetch();
+
+        if ($doesExist) {
+            $this->connection->mysql
+                ->query("DELETE FROM migrations WHERE migration = '$migrationName'")
+                ->execute();
+        }
     }
 }

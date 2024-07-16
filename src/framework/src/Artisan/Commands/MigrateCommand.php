@@ -46,7 +46,7 @@ class MigrateCommand implements CommandInterface
     private function createMigrationsTable(): void
     {
         $doesExist = $this->connection->mysql
-            ->query("SHOW TABLES FROM `test` like 'migrations';")
+            ->query("SHOW TABLES FROM `{$_ENV['DB_NAME']}` like 'migrations';")
             ->fetch();
 
         if (!$doesExist) {
