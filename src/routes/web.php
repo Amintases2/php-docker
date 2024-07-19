@@ -6,8 +6,8 @@ use PFW\Framework\Http\Response;
 
 return [
 
-    Route::get('/hi/{name}', function (string $name) {
-        return new Response("hello, {$name}");
+    Route::get('/', function () {
+        return new Response(['name' => 'Hello from service']);
     }),
 
     Route::get('/api/v1/bidding/create', [BiddingController::class, 'create']),
