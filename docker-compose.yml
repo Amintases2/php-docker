@@ -1,6 +1,5 @@
-version: '3'
+version: "3"
 services:
-
   ##############################################
   # PHP
   ##############################################
@@ -31,27 +30,27 @@ services:
   ##############################################
   # MYSQL
   ##############################################
-  db:
-    image: mysql:8
-    volumes:
-    - ./docker/db/data:/var/lib/mysql
-    - ./docker/logs:/var/log/mysql
-    - ./docker/db/sql:/docker-entrypoint-initdb.d
-    environment:
-      MYSQL_ROOT_PASSWORD: root
+  # db:
+  #   image: mysql:8
+  #   volumes:
+  #   - ./docker/db/data:/var/lib/mysql
+  #   - ./docker/logs:/var/log/mysql
+  #   - ./docker/db/sql:/docker-entrypoint-initdb.d
+  #   environment:
+  #     MYSQL_ROOT_PASSWORD: root
 
   ##############################################
   # PMA
   ##############################################
-  phpmyadmin:
-    image: phpmyadmin/phpmyadmin
-    ports:
-        - 8080:80
-    links:
-        - db
-    environment:
-        PMA_HOST: db
-        PMA_PORT: 3306
-        PMA_ARBITRARY: 1
-    volumes:
-        - ./docker/phpmyadmin/sessions:/sessions
+  # phpmyadmin:
+  #   image: phpmyadmin/phpmyadmin
+  #   ports:
+  #       - 8080:80
+  #   links:
+  #       - db
+  #   environment:
+  #       PMA_HOST: db
+  #       PMA_PORT: 3306
+  #       PMA_ARBITRARY: 1
+  #   volumes:
+  #       - ./docker/phpmyadmin/sessions:/sessions
