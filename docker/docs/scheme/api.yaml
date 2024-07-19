@@ -1,0 +1,29 @@
+openapi: 3.0.2
+info:
+  title: Торги по банкротству
+  version: 1.0.0
+  description: API для клиента
+servers:
+  - url: "http://192.168.1.241:3000/api/v1/"
+    description: Dev
+paths:
+  /bidding/create:
+    get:
+      responses:
+        "200":
+          description: OK
+    post:
+      responses:
+        "200":
+          description: OK
+    parameters:
+      - name: date
+        description: ""
+        schema:
+          type: string
+        in: query
+        required: false
+
+components: {}
+security:
+  - {}

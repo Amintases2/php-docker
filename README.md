@@ -1,13 +1,16 @@
 # Docker
+
 Simple php framework
 
 ## Stack
+
 - nginx
 - php: 8.3-fpm
 - mysql: 8
 - phpmyadmin
 
 ## Deployment
+
 To deploy this project run
 
 ```
@@ -16,13 +19,22 @@ To deploy this project run
 ```
 
 ## Tests
+
 To test this project with PHPUnit run
 
 ```
   docker-compose exec php composer test
 ```
 
+## Docs
+
+```
+  cd ./docker/docs
+  redocly build-docs ./scheme/api.yaml
+```
+
 ## PMA
+
 - localhost:8080
 - root:root
 
