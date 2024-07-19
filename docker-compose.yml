@@ -18,7 +18,7 @@ services:
   nginx:
     image: nginx:latest
     ports:
-      - 80:80
+      - 3000:80
     volumes:
       - ./src:/var/www
       - ./docker/logs:/var/log/nginx
