@@ -14,6 +14,8 @@ class Response
 
 	public function send(): void
 	{
+		header('Access-Control-Allow-Origin', '*');
+		header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
 		if (is_array($this->content)) {
 			header('Content-Type: application/json');
 			echo json_encode($this->content);
