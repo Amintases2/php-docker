@@ -9,6 +9,6 @@ class BiddingController extends AbstractController
 {
     public function create()
     {
-        return new Response('OK');
+        return new Response(['message' => 'OK']);
     }
 }
