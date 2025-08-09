@@ -17,14 +17,7 @@ To deploy this project run
   cp ./src/.env.example ./src/.env
   docker compose up -d --build
   docker compose exec php composer install
-```
-
-## Tests
-
-To test this project with PHPUnit run
-
-```
-  docker compose exec php composer test
+  docker compose exec php php artisan migrate
 ```
 
 ## PMA
